@@ -1,0 +1,79 @@
+{
+  "name": "dsh-plugin-jev-supervisor",
+  "version": "1.0.0",
+  "description": "Jev Supervisor for DeepSeek Harness Desktop: bounded, redacted tool-call supervision through the TypeSafe system API, with a per-profile credential entry you supply.",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "client",
+    "locale",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "deepseek",
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "supervisor",
+    "typesafe",
+    "jev"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "pretest": "node test/ensure-runtime.mjs",
+    "test": "node --test --test-timeout=25000 test/core.test.js test/store.test.js test/client.test.js test/integration.test.js test/v4-contract.test.js",
+    "test:unit": "node --test test/core.test.js test/store.test.js test/client.test.js test/v4-contract.test.js",
+    "prepare:runtime": "node test/prepare-runtime.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "meta": {
+    "title": "Jev Supervisor",
+    "description": "Bounded, redacted supervision of tool calls through the TypeSafe system API. Disabled until you add your own key."
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-credentials": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-storage-domain": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
+    "@deepseek-ai/schemastery": "~3.18.4"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-llm": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-storage-domain": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
+  }
+}

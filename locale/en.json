@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Jev Supervisor",
+    "description": "Bounded, redacted supervision of tool calls through the TypeSafe system API. Uses your own TypeSafe key, stored in this machine's Harness credential store; disabled until you add one."
+  }
+}

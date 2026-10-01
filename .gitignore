@@ -1,0 +1,15 @@
+# Dependencies and the local module-resolution fixture used by the test suite.
+# `npm run prepare:runtime` rebuilds the fixture from an installed Harness; it is
+# never committed, because it is only symlinks into that installation.
+node_modules/
+test/node_modules/
+test/runtime/
+
+# Local plugin data written at runtime: never commit supervision state.
+.jev-supervisor/
+*.jsonl
+settings.json
+
+# Editor and OS noise.
+.DS_Store
+*.swp

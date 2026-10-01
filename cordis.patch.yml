@@ -1,0 +1,42 @@
+# dsh-plugin-jev-supervisor — loader layer.
+#
+# This file is applied automatically when the package is added as a profile
+# bundle (declared through `dsh.bundle.patch` in package.json). It inserts the
+# Host row under the id "jev-supervisor".
+#
+# This row declares the `credentials` service as a dependency, because the
+# credential provider's service registers only after its own asynchronous init;
+# the plugin must activate once that service exists rather than race it.
+#
+# The defaults below are the safe ones: the plugin starts in `shadow`, so it
+# calls the TypeSafe API and records judgments but never intervenes. It cannot
+# intervene at all until a credential is stored, and `off` performs no call.
+#
+# `callBudget` counts judgement calls, not tool actions: a tool action is usually
+# judged once before and once after it runs, so 24 covers roughly 12 actions.
+# `interventionLimit` is independent of it and counts only actual interventions
+# (deny, ask, corrective feedback). Both are changeable in Settings -> Jev
+# Supervisor, and a value the user changes there is stored per profile and wins
+# over this row; a value the user never touched keeps following this default.
+#
+# Everything a user changes from the UI (mode, enabled state, budgets, and the
+# first-run decision) is stored in the profile and wins over these values; edit
+# them only to change the shipped defaults for this profile.
+#
+# `keyRef` is intentionally absent: the credential reference is derived from the
+# owning profile, so two profiles in one harness home keep two separate entries
+# and never read or overwrite each other's key. Set it only to pin a name a
+# deployment already manages; the settings page always shows the name in use.
+- insert:
+    - id: jev-supervisor
+      name: dsh-plugin-jev-supervisor
+      config:
+        mode: shadow
+        apiEnabled: true
+        model: jev-1.13.0
+        timeoutMs: 5000
+        callBudget: 24
+        interventionLimit: 3
+        confidenceThreshold: 0.9
+        probabilityThreshold: 0.9
+        snapshotBytes: 8000

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Jev Supervisor",
+    "description": "通过 TypeSafe 监督接口检查工具调用，只发送真实且有限的脱敏状态快照。使用你自己的 TypeSafe key（保存在本机 Harness 凭据存储）；未填写 key 前不会干预。"
+  }
+}
